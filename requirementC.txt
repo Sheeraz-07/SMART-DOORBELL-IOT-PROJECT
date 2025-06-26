@@ -1,0 +1,5 @@
+esp_camera.h (ESP32 Camera library, usually included with ESP32 board support)
+WiFi.h (ESP32 WiFi library)
+WiFiClientSecure.h (ESP32 WiFi secure client)
+HTTPClient.h (ESP32 HTTP client)
+ESPmDNS.h (ESP32 mDNS library)

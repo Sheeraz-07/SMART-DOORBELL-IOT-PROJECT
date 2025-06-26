@@ -1,0 +1,310 @@
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Face Recognition Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Reset and Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #eef2f3, #cfd9df);
+            color: #333;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .latest {
+            text-align: center;
+            margin: 30px auto;
+            padding: 20px;
+            max-width: 600px;
+            background: #ffffffcc;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .latest h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #1e90ff;
+        }
+
+        .latest img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            border: 3px solid #1e90ff;
+            transition: transform 0.2s;
+        }
+
+        .latest img:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .no-images {
+            margin-top: 40px;
+            font-size: 1.2em;
+            color: #777;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1> Face Recognition Dashboard</h1>
+    </header>
+
+    {% if latest_image %}
+        <div class="latest">
+            <h2>Latest Detected Face</h2>
+            <img src="{{ url_for('static', filename='received_images/' + latest_image) }}?t={{ current_time }}" alt="Latest Image">
+        </div>
+    {% endif %}
+
+    {% if images %}
+        <div class="gallery">
+            {% for image in images %}
+                <img src="{{ url_for('static', filename='received_images/' + image) }}" alt="Image">
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-images">No images uploaded yet.</p>
+    {% endif %}
+
+    <footer>
+        &copy; 2025 AI Dashboard by Sherry ????
+    </footer>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Face Recognition Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Reset and Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #eef2f3, #cfd9df);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            background: #2c3e50;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            color: white;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5em;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1abc9c;
+        }
+
+        .sidebar button {
+            padding: 12px;
+            font-size: 1em;
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar button:hover {
+            background-color: #16a085;
+        }
+
+        /* Content */
+        .main {
+            margin-left: 240px;
+            padding: 30px;
+            flex: 1;
+        }
+
+        .latest, .gallery {
+            display: none;
+        }
+
+        .latest.active, .gallery.active {
+            display: block;
+        }
+
+        .latest {
+            text-align: center;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffffcc;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .latest h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #1e90ff;
+        }
+
+        .latest img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            border: 3px solid #1e90ff;
+            transition: transform 0.3s;
+        }
+
+        .latest img:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .no-images {
+            text-align: center;
+            font-size: 1.2em;
+            color: #777;
+            margin-top: 40px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1>📷 SMART DOORBELL Dashboard</h1>
+        <button onclick="showSection('latest')">📌 Latest</button>
+        <button onclick="showSection('gallery')">🖼️ Gallery</button>
+    </div>
+
+    <div class="main">
+        {% if latest_image %}
+        <div id="latest" class="latest active">
+            <h2>📸 Latest Detected Face</h2>
+            <img src="{{ url_for('static', filename='received_images/' + latest_image) }}?t={{ current_time }}" alt="Latest Image">
+        </div>
+        {% endif %}
+
+        {% if images %}
+        <div id="gallery" class="gallery">
+            {% for image in images %}
+                <a href="{{ url_for('static', filename='received_images/' + image) }}" target="_blank">
+                    <img src="{{ url_for('static', filename='received_images/' + image) }}" alt="Image">
+                </a>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p class="no-images">No images uploaded yet.</p>
+        {% endif %}
+
+        <footer>
+            &copy; 2025 SMART DOORBELL Dashboard by Myth Busters 🧠💫
+        </footer>
+    </div>
+
+    <script>
+        function showSection(section) {
+            document.querySelector('.latest')?.classList.remove('active');
+            document.querySelector('.gallery')?.classList.remove('active');
+
+            if (section === 'latest') {
+                document.getElementById('latest')?.classList.add('active');
+            } else if (section === 'gallery') {
+                document.getElementById('gallery')?.classList.add('active');
+            }
+        }
+
+        // Default to latest on page load
+        window.onload = () => showSection('latest');
+    </script>
+</body>
+</html> 

@@ -1,0 +1,10 @@
+flask
+requests
+numpy
+opencv-python
+face_recognition
+scikit-learn
+pillow
+adafruit-circuitpython-ssd1306
+adafruit-blinka
+adafruit-circuitpython-busdevice
